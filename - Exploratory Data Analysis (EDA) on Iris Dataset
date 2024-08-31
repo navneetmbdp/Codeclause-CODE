@@ -1,0 +1,29 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import load_iris
+
+# Load the Iris dataset
+iris = load_iris()
+df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+df['species'] = iris.target_names[iris.target]
+
+# Exploratory data analysis
+# 1. Descriptive statistics
+print(df.describe())
+
+# 2. Pairplot to visualize relationships between features
+sns.pairplot(df, hue='species')
+plt.show()
+
+# 3. Boxplots to compare distributions of features across species
+for feature in iris.feature_names:
+    sns.boxplot(x='species', y=feature, data=df)
+    plt.title(f'{feature} Distribution by Species')
+    plt.show()
+
+# 4. Heatmap to visualize correlations between features
+corr_matrix = df.corr()
+sns.heatmap(corr_matrix, annot=True)
+plt.title('Correlation Matrix')
+plt.show()
