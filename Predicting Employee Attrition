@@ -1,0 +1,41 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import load_iris
+
+# Load the Iris dataset
+iris = load_iris()
+df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+df['species'] = iris.target_names[iris.target]
+
+# Exploratory Data Analysis
+
+# 1. Descriptive statistics
+print(df.describe())
+
+# 2. Data visualization
+#   a. Pairplot
+sns.pairplot(df, hue='species')
+plt.show()
+
+#   b. Boxplot
+sns.boxplot(x='species', y='sepal length (cm)', data=df)
+plt.show()
+
+#   c. Violin plot
+sns.violinplot(x='species', y='sepal width (cm)', data=df)
+plt.show()
+
+#   d. Scatterplot
+sns.scatterplot(x='sepal length (cm)', y='sepal width (cm)', data=df, hue='species')
+plt.show()
+
+# 3. Data manipulation
+#   a. Correlation matrix
+correlation_matrix = df.corr()
+sns.heatmap(correlation_matrix, annot=True)
+plt.show()
+
+#   b. Groupby analysis
+grouped_data = df.groupby('species').mean()
+print(grouped_data)
